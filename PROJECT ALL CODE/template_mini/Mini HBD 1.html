@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buatmu — Mini Birthday Surprise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  /* =========================================================
+     ⚙️  KONFIGURASI CUSTOMER — ubah bagian ini saja per pesanan
+     (warna/layout diatur lewat CSS variables di bawah, tidak
+     perlu diutak-atik kalau cuma ganti isi konten)
+     ========================================================= */
+
+  :root{
+    /* --- palet: malam lilin --- */
+    --ink-deep:   #1B1330;
+    --ink-soft:   #2A1F45;
+    --gold:       #E8B75C;
+    --gold-soft:  #F2CE8A;
+    --cream:      #F6EFE3;
+    --blush:      #E8917C;
+    --cream-dim:  rgba(246,239,227,0.62);
+
+    --serif: 'Fraunces', Georgia, serif;
+    --sans:  'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ min-height:100%; margin:0; padding:0; }
+  body{
+    background: var(--ink-deep);
+    background-image: radial-gradient(120% 140% at 50% 0%, var(--ink-soft) 0%, var(--ink-deep) 62%);
+    background-attachment: fixed;
+    color: var(--cream);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* ---------- lampu-lampu kecil melayang (satu motion moment global) ---------- */
+  .fireflies{ position:fixed; inset:0; pointer-events:none; z-index:0; }
+  .firefly{
+    position:absolute; bottom:-10px; border-radius:50%;
+    background: radial-gradient(circle, var(--gold-soft) 0%, transparent 70%);
+    opacity:0; filter: blur(0.3px);
+    animation: rise linear infinite;
+  }
+  @keyframes rise{
+    0%   { transform: translateY(0) translateX(0); opacity:0; }
+    10%  { opacity:0.9; }
+    90%  { opacity:0.5; }
+    100% { transform: translateY(-110vh) translateX(var(--drift,20px)); opacity:0; }
+  }
+
+  /* ---------- kerangka scene ---------- */
+  .stage{
+    position:relative; z-index:1;
+    min-height:100dvh; width:100%;
+    display:flex; align-items:center; justify-content:center;
+    padding: calc(env(safe-area-inset-top,0px) + 48px) 24px calc(env(safe-area-inset-bottom,0px) + 48px);
+  }
+  .scene{
+    display:none;
+    width:100%; max-width:420px;
+    text-align:center;
+    animation: sceneIn 0.7s ease forwards;
+  }
+  .scene.active{ display:block; }
+  @keyframes sceneIn{
+    from{ opacity:0; transform: translateY(14px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .eyebrow{
+    font-size: 13px;
+    color: var(--cream-dim);
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+  }
+
+  .btn{
+    font-family: var(--sans);
+    font-weight:600;
+    font-size: 15px;
+    color: var(--ink-deep);
+    background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+    border:none;
+    padding: 14px 34px;
+    border-radius: 999px;
+    cursor:pointer;
+    box-shadow: 0 8px 24px rgba(232,183,92,0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 28px rgba(232,183,92,0.35); }
+  .btn:active{ transform: translateY(0) scale(0.97); box-shadow: 0 4px 14px rgba(232,183,92,0.25); }
+  .btn:focus-visible{ outline: 2px solid var(--cream); outline-offset: 3px; }
+  .btn-ghost{
+    background:none; color: var(--cream-dim);
+    border: 1px solid rgba(246,239,227,0.25);
+    box-shadow:none;
+  }
+  .btn-ghost:hover{ color: var(--cream); border-color: rgba(246,239,227,0.5); }
+
+  /* ---------- progress titik ---------- */
+  .progress{
+    position:fixed; top: calc(20px + env(safe-area-inset-top,0px)); left:50%; transform:translateX(-50%);
+    display:flex; gap:7px; z-index:2;
+  }
+  .progress span{
+    width:6px; height:6px; border-radius:50%;
+    background: rgba(246,239,227,0.22);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .progress span.done{ background: var(--gold); transform: scale(1.15); }
+
+  /* =========================================================
+     1) OPENING
+     ========================================================= */
+  #scene-opening .name{
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--cream);
+    margin: 0 0 14px;
+  }
+  #scene-opening .lead{
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--cream-dim);
+    max-width: 320px;
+    margin: 0 auto 40px;
+  }
+  .seal{
+    width:56px; height:56px; margin:0 auto 28px;
+    border-radius:50%;
+    border: 1px solid rgba(232,183,92,0.4);
+    display:flex; align-items:center; justify-content:center;
+    animation: pulseSeal 3.2s ease-in-out infinite;
+  }
+  .seal svg{ width:22px; height:22px; }
+  @keyframes pulseSeal{
+    0%,100%{ box-shadow: 0 0 0 0 rgba(232,183,92,0.18); }
+    50%{ box-shadow: 0 0 0 10px rgba(232,183,92,0); }
+  }
+
+  /* =========================================================
+     2) BIRTHDAY REVEAL
+     ========================================================= */
+  #scene-reveal .cake{ font-size: 44px; display:inline-block; margin-bottom: 18px; animation: bounceOnce 0.9s ease 0.2s both; }
+  @keyframes bounceOnce{
+    0%{ transform: scale(0.5); opacity:0; }
+    55%{ transform: scale(1.12); opacity:1; }
+    75%{ transform: scale(0.96); }
+    100%{ transform: scale(1); }
+  }
+  #scene-reveal h1{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(28px, 7vw, 38px);
+    line-height: 1.25;
+    margin: 0 0 12px;
+    color: var(--cream);
+  }
+  #scene-reveal h1 em{
+    font-style: italic;
+    color: var(--gold-soft);
+  }
+  #scene-reveal .sub{
+    color: var(--cream-dim);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+
+  /* =========================================================
+     3) SIMPLE GALLERY (maks 3 foto, stacked)
+     ========================================================= */
+  #scene-gallery h2, #scene-message h2, #scene-ending h2{
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--cream);
+    margin: 0 0 26px;
+  }
+  .photo-stack{
+    display:flex; flex-direction:column; align-items:center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .photo-card{
+    width: min(200px, 62vw);
+    background: var(--cream);
+    padding: 8px 8px 20px;
+    border-radius: 3px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  }
+  .photo-card:nth-child(1){ transform: rotate(-3deg); }
+  .photo-card:nth-child(2){ transform: rotate(2deg); }
+  .photo-card:nth-child(3){ transform: rotate(-1.5deg); }
+  .photo-card img{
+    width:100%; height:min(180px, 62vw); object-fit:cover; display:block; border-radius:1px;
+    background: var(--ink-soft);
+  }
+  .photo-card .cap{
+    display:block; margin-top:10px; text-align:center;
+    font-family: var(--serif); font-style:italic; font-size:13px; color: var(--ink-deep);
+  }
+
+  /* =========================================================
+     4) MESSAGE
+     ========================================================= */
+  .message-card{
+    padding: 30px 26px;
+    border: 1px solid rgba(232,183,92,0.22);
+    border-radius: 4px;
+    background: rgba(246,239,227,0.03);
+    margin-bottom: 32px;
+  }
+  .message-card p{
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--cream);
+    margin: 0 0 16px;
+  }
+  .message-card .from{
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 13px;
+    color: var(--cream-dim);
+  }
+
+  /* =========================================================
+     5) ENDING
+     ========================================================= */
+  #scene-ending .heart{ font-size: 30px; margin-bottom: 16px; display:block; }
+  #scene-ending p{
+    color: var(--cream-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0 auto 30px;
+  }
+  .brand{
+    margin-top: 34px; font-size: 11px; letter-spacing: 0.04em;
+    color: rgba(246,239,227,0.35);
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- lampu-lampu melayang, dekorasi latar global -->
+  <div class="fireflies" id="fireflies"></div>
+
+  <!-- indikator progres 5 scene -->
+  <div class="progress" id="progress"></div>
+
+  <div class="stage">
+
+    <!-- ============ 1) OPENING ============ -->
+    <section class="scene active" id="scene-opening">
+      <div class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#E8B75C" stroke-width="1.4">
+          <path d="M12 21s-7.5-4.7-9.6-9.3C.8 7.8 3 4.5 6.3 4.5c2 0 3.4 1.1 4.2 2.3.4.6 1.6.6 2 0C13.3 5.6 14.7 4.5 16.7 4.5 20 4.5 22.2 7.8 20.6 11.7 18.5 16.3 12 21 12 21z"/>
+        </svg>
+      </div>
+      <p class="eyebrow" id="opening-eyebrow">Untuk Aisyah</p>
+      <h2 class="name">Hey, Aisyah.</h2>
+      <p class="lead">Ada kejutan kecil yang dibuat khusus untukmu. Nggak akan lama — tapi dibuat dengan sepenuh hati.</p>
+      <button class="btn" onclick="goTo('reveal')">Buka Kejutan</button>
+    </section>
+
+    <!-- ============ 2) BIRTHDAY REVEAL ============ -->
+    <section class="scene" id="scene-reveal">
+      <span class="cake">🎂</span>
+      <h1>Happy Birthday,<br><em>Aisyah</em></h1>
+      <p class="sub">Semoga hari ini terasa spesial seperti kamu.</p>
+      <button class="btn" onclick="goTo('gallery')">Lanjut</button>
+    </section>
+
+    <!-- ============ 3) SIMPLE GALLERY (maks 3 foto) ============ -->
+    <section class="scene" id="scene-gallery">
+      <h2>Sedikit kenangan</h2>
+      <div class="photo-stack" id="photo-stack">
+        <!-- diisi otomatis oleh JS dari GALLERY_PHOTOS -->
+      </div>
+      <button class="btn" onclick="goTo('message')">Lanjut</button>
+    </section>
+
+    <!-- ============ 4) MESSAGE ============ -->
+    <section class="scene" id="scene-message">
+      <h2>Sepucuk pesan</h2>
+      <div class="message-card">
+        <p id="message-text">"Terima kasih sudah jadi teman yang selalu ada. Semoga tahun ini membawa lebih banyak hal baik untukmu. Selamat ulang tahun!"</p>
+        <span class="from" id="message-from">— dari Raka</span>
+      </div>
+      <button class="btn" onclick="goTo('ending')">Lanjut</button>
+    </section>
+
+    <!-- ============ 5) ENDING ============ -->
+    <section class="scene" id="scene-ending">
+      <span class="heart">✦</span>
+      <h2>Selamat merayakan harimu</h2>
+      <p id="ending-text">Semoga tahun ini membawa lebih banyak tawa, ketenangan, dan hal-hal baik yang memang layak kamu dapatkan. Selamat ulang tahun, sekali lagi.</p>
+      <button class="btn btn-ghost" onclick="goTo('opening')">Ulangi</button>
+      <div class="brand">dibuat oleh Buatmu.id</div>
+    </section>
+
+  </div>
+
+<script>
+  /* =========================================================
+     ⚙️  DATA PERSONALISASI — SATU-SATUNYA BAGIAN YANG PERLU
+     DIUBAH UNTUK SETIAP CUSTOMER MINI
+     ========================================================= */
+  const CONFIG = {
+    recipientName: "Aisyah",
+    openingMessage: "Ada kejutan kecil yang dibuat khusus untukmu. Nggak akan lama — tapi dibuat dengan sepenuh hati.",
+    photos: [
+      { src: "assets/photos/photo-1.png", caption: "" },
+      { src: "assets/photos/photo-2.png", caption: "" },
+      { src: "assets/photos/photo-3.png", caption: "" }
+    ], // maksimal 3 foto sesuai scope Mini
+    message: "Terima kasih sudah jadi teman yang selalu ada. Semoga tahun ini membawa lebih banyak hal baik untukmu. Selamat ulang tahun!",
+    fromName: "Raka"
+  };
+
+  /* ---------- render CONFIG ke tiap komponen ---------- */
+  document.getElementById('opening-eyebrow').textContent = "Untuk " + CONFIG.recipientName;
+  document.querySelector('#scene-opening .name').textContent = "Hey, " + CONFIG.recipientName + ".";
+  document.querySelector('#scene-opening .lead').textContent = CONFIG.openingMessage;
+  document.querySelector('#scene-reveal h1').innerHTML = "Happy Birthday,<br><em>" + CONFIG.recipientName + "</em>";
+  document.getElementById('message-text').textContent = '"' + CONFIG.message + '"';
+  document.getElementById('message-from').textContent = "— dari " + CONFIG.fromName;
+
+  const stack = document.getElementById('photo-stack');
+  CONFIG.photos.slice(0, 3).forEach(photo => {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.innerHTML = `<img src="${photo.src}" alt="Kenangan bersama ${CONFIG.recipientName}">` +
+      (photo.caption ? `<span class="cap">${photo.caption}</span>` : '');
+    stack.appendChild(card);
+  });
+
+  /* ---------- navigasi antar scene ---------- */
+  const order = ['opening', 'reveal', 'gallery', 'message', 'ending'];
+  const progressEl = document.getElementById('progress');
+  order.forEach(() => {
+    const dot = document.createElement('span');
+    progressEl.appendChild(dot);
+  });
+
+  function goTo(id){
+    order.forEach(name => document.getElementById('scene-' + name).classList.remove('active'));
+    document.getElementById('scene-' + id).classList.add('active');
+    const idx = order.indexOf(id);
+    [...progressEl.children].forEach((dot, i) => dot.classList.toggle('done', i <= idx));
+    window.scrollTo(0, 0);
+  }
+  goTo('opening');
+
+  /* ---------- lampu-lampu melayang (dekorasi latar) ---------- */
+  const fireflyLayer = document.getElementById('fireflies');
+  for(let i = 0; i < 16; i++){
+    const f = document.createElement('div');
+    f.className = 'firefly';
+    const size = 2 + Math.random() * 3;
+    f.style.width = size + 'px';
+    f.style.height = size + 'px';
+    f.style.left = Math.random() * 100 + 'vw';
+    f.style.setProperty('--drift', (Math.random() * 40 - 20) + 'px');
+    f.style.animationDuration = (9 + Math.random() * 8) + 's';
+    f.style.animationDelay = (Math.random() * 10) + 's';
+    fireflyLayer.appendChild(f);
+  }
+</script>
+</body>
+</html>

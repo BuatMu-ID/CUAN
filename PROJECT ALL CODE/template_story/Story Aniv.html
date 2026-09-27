@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="rose">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu — Sebuah Cerita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Story Aniv.css">
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- SAMPUL / COVER — layar pertama sebelum cerita dibuka -->
+<!-- Ganti "Nama Penerima" dan sapaan sesuai pesanan customer -->
+<!-- ============================================= -->
+<section id="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">sebuah cerita untuk</p>
+    <h1 class="cover-name">Nama Penerima</h1>
+    <p class="cover-sub">dari seseorang yang menyimpan setiap detailnya</p>
+    <button id="openBtn" class="cover-btn">Buka Ceritanya</button>
+  </div>
+  <div class="cover-texture" aria-hidden="true"></div>
+</section>
+
+<!-- Tombol musik — muncul setelah cover dibuka -->
+<button id="musicToggle" class="music-toggle" aria-label="Putar musik" hidden>
+  <span class="music-icon"></span>
+</button>
+<!-- GANTI src di bawah dengan file musik pilihan customer, taruh file audio di folder yang sama -->
+<audio id="bgAudio" loop preload="none">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<main id="story" hidden>
+
+  <!-- ============================================= -->
+  <!-- 1. PERSONALIZED OPENING -->
+  <!-- ============================================= -->
+  <section class="panel" id="opening">
+    <div class="panel-inner reveal-on-scroll">
+      <p class="label">untuk kamu,</p>
+      <h2 class="display-text">Nama Penerima</h2>
+      <!-- Ganti paragraf ini dengan pesan pembuka dari customer -->
+      <p class="body-text">
+        Ada hari-hari yang lewat begitu saja, dan ada beberapa yang menetap —
+        yang terus kita putar ulang dalam ingatan karena terlalu berharga untuk dilupakan.
+        Ini adalah kumpulan dari hari-hari itu, disusun jadi satu cerita, khusus untukmu.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 2. BIRTHDAY / ANNIVERSARY REVEAL — animasi angka/momen -->
+  <!-- Ganti angka tahun & label sesuai momen yang dirayakan -->
+  <!-- ============================================= -->
+  <section class="panel panel--dark" id="momentReveal">
+    <div class="panel-inner reveal-on-scroll">
+      <p class="label label--light">merayakan</p>
+      <div class="reveal-number" id="revealNumber" data-target="5">0</div>
+      <p class="reveal-caption">tahun kita bertumbuh, bersama</p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 3. MEMORY GALLERY — maksimal 10 foto, layout storytelling -->
+  <!-- Ganti setiap .frame dengan <img src="foto1.jpg" alt="..."> -->
+  <!-- ============================================= -->
+  <section class="panel" id="gallery">
+    <div class="panel-inner">
+      <p class="label center">sepotong kenangan</p>
+      <h2 class="display-text center">Momen yang Kita Simpan</h2>
+      <div class="gallery-grid">
+        <figure class="frame frame--tall reveal-on-scroll"><span class="frame-ph">Foto 1</span></figure>
+        <figure class="frame reveal-on-scroll"><span class="frame-ph">Foto 2</span></figure>
+        <figure class="frame reveal-on-scroll"><span class="frame-ph">Foto 3</span></figure>
+        <figure class="frame frame--wide reveal-on-scroll"><span class="frame-ph">Foto 4</span></figure>
+        <figure class="frame reveal-on-scroll"><span class="frame-ph">Foto 5</span></figure>
+        <figure class="frame frame--tall reveal-on-scroll"><span class="frame-ph">Foto 6</span></figure>
+        <figure class="frame reveal-on-scroll"><span class="frame-ph">Foto 7</span></figure>
+        <figure class="frame frame--wide reveal-on-scroll"><span class="frame-ph">Foto 8</span></figure>
+        <figure class="frame reveal-on-scroll"><span class="frame-ph">Foto 9</span></figure>
+        <figure class="frame reveal-on-scroll"><span class="frame-ph">Foto 10</span></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 4. OUR STORY — How It Started / A Special Moment / Today -->
+  <!-- Isi tiap bagian dari bahan cerita yang diberikan customer -->
+  <!-- ============================================= -->
+  <section class="panel panel--rose" id="ourStory">
+    <div class="panel-inner">
+      <p class="label center">kisah kita</p>
+      <h2 class="display-text center">Our Story</h2>
+
+      <div class="story-chapter reveal-on-scroll">
+        <h3 class="chapter-title">How It Started</h3>
+        <p class="body-text">
+          Ganti dengan cerita awal pertemuan — di mana, bagaimana, dan apa yang
+          membuat momen itu terasa berbeda dari hari-hari biasa.
+        </p>
+      </div>
+
+      <div class="story-chapter reveal-on-scroll">
+        <h3 class="chapter-title">A Special Moment</h3>
+        <p class="body-text">
+          Ganti dengan satu momen yang paling diingat — sebuah keputusan, perjalanan,
+          atau kejadian kecil yang ternyata berarti besar.
+        </p>
+      </div>
+
+      <div class="story-chapter reveal-on-scroll">
+        <h3 class="chapter-title">Today</h3>
+        <p class="body-text">
+          Ganti dengan bagaimana semuanya terasa hari ini — apa yang berubah,
+          apa yang tetap sama, dan apa yang membuat cerita ini masih terus berjalan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 5. TIMELINE — isi tahun & judul sesuai info customer -->
+  <!-- ============================================= -->
+  <section class="panel" id="timeline">
+    <div class="panel-inner">
+      <p class="label center">perjalanannya</p>
+      <h2 class="display-text center">Timeline</h2>
+
+      <ol class="timeline-list">
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-year">2019</span>
+          <span class="timeline-text">First Meeting</span>
+        </li>
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-year">2021</span>
+          <span class="timeline-text">A Special Memory</span>
+        </li>
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-year">2024</span>
+          <span class="timeline-text">Another Chapter</span>
+        </li>
+        <li class="timeline-item reveal-on-scroll">
+          <span class="timeline-year">2026</span>
+          <span class="timeline-text">Today</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 6. PERSONAL LETTER — pesan panjang dari customer -->
+  <!-- ============================================= -->
+  <section class="panel panel--dark" id="letter">
+    <div class="panel-inner reveal-on-scroll">
+      <p class="label label--light center">sepucuk surat</p>
+      <div class="letter-paper">
+        <p class="body-text letter-text">
+          Ganti seluruh paragraf ini dengan surat pribadi dari customer untuk
+          orang yang dituju. Biarkan panjang dan personal — inilah bagian inti
+          dari hadiah ini. Tulis apa adanya, dengan nada bicara customer sendiri,
+          tanpa perlu dirapikan menjadi terlalu formal.
+        </p>
+        <p class="letter-signoff">— dengan sayang</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 7. INTERACTIVE REVEAL — satu momen interaktif khusus -->
+  <!-- Ganti isi #hiddenMessage dengan pesan kejutan dari customer -->
+  <!-- ============================================= -->
+  <section class="panel" id="interactive">
+    <div class="panel-inner center reveal-on-scroll">
+      <p class="body-text">I have one more thing for you</p>
+      <button id="revealBtn" class="reveal-btn">Reveal →</button>
+      <p id="hiddenMessage" class="hidden-message" hidden>
+        Ganti dengan pesan kejutan singkat — sebuah janji, ucapan terima kasih,
+        atau satu kalimat yang belum pernah terucap.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 8. ENDING — penutup personal -->
+  <!-- ============================================= -->
+  <section class="panel panel--rose" id="ending">
+    <div class="panel-inner center reveal-on-scroll">
+      <p class="label center">penutup</p>
+      <h2 class="display-text center">Sampai cerita berikutnya.</h2>
+      <p class="body-text">
+        Ganti dengan kalimat penutup personal dari customer — ucapan terima kasih,
+        harapan, atau janji untuk bab-bab selanjutnya.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script src="Story Aniv.js"></script>
+</body>
+</html>

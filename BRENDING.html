@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buatmu_id — Website Ucapan Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root {
+  --ink: #2E1C1F;
+  --cream: #FBF1EA;
+  --paper: #FFFBF6;
+  --rose: #E8A6AC;
+  --rose-soft: #F3CBCF;
+  --deep-rose: #B2626B;
+  --gold: #C99A57;
+  --sage: #8E9E6B;
+  --line: #F1D9D2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* =========================================================
+   TYPE
+   ========================================================= */
+.hero-title, .section-title, .cta-title, .scene-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.hero-eyebrow, .section-eyebrow, .cta-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--deep-rose);
+}
+
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 5vw;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nav-logo { display: flex; align-items: center; gap: 0.6rem; }
+.nav-logo-mark {
+  font-size: 1.3rem;
+  color: var(--deep-rose);
+}
+.nav-logo-text {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+.nav-logo-sub {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  opacity: 0.65;
+}
+
+.nav-links { display: flex; gap: 2rem; font-size: 0.92rem; }
+.nav-links a { opacity: 0.75; transition: opacity 0.25s ease; }
+.nav-links a:hover { opacity: 1; }
+
+.nav-cta {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  background: var(--deep-rose);
+  color: var(--paper);
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.nav-cta:hover { background: var(--ink); }
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 3rem 5vw 6rem;
+}
+
+.hero-title { font-size: clamp(2.4rem, 4.6vw, 3.6rem); margin: 0.5rem 0 1.2rem; }
+.hero-eyebrow { font-size: 1.15rem; margin-bottom: 0.3rem; }
+.hero-desc { max-width: 42ch; line-height: 1.8; opacity: 0.82; margin-bottom: 2rem; }
+
+.hero-categories { display: flex; gap: 1.8rem; margin-bottom: 2.4rem; flex-wrap: wrap; }
+.cat-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-size: 0.85rem; opacity: 0.85; }
+.cat-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+[data-icon="cake"]::before { content: "🎂"; }
+[data-icon="rings"]::before { content: "💍"; }
+[data-icon="cap"]::before { content: "🎓"; }
+[data-icon="bouquet"]::before { content: "💐"; }
+
+.hero-cta {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  background: var(--rose);
+  color: var(--ink);
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 2.1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.hero-cta:hover { background: var(--deep-rose); color: var(--paper); transform: translateY(-2px); }
+
+/* =========================================================
+   HERO VISUAL / PHONE MOCKUP
+   ========================================================= */
+.hero-visual { position: relative; display: flex; justify-content: center; }
+
+.badge {
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.6rem 1rem;
+  max-width: 160px;
+  text-align: center;
+  line-height: 1.3;
+  box-shadow: 0 8px 20px rgba(46, 28, 31, 0.06);
+}
+.badge--top { top: -0.5rem; left: -1rem; }
+.badge--side { bottom: 3.5rem; right: -1.5rem; }
+
+@media (max-width: 900px) {
+  .badge { display: none; }
+}
+
+.phone {
+  width: 260px;
+  height: 540px;
+  background: var(--ink);
+  border-radius: 38px;
+  padding: 10px;
+  position: relative;
+  transform: rotate(-3deg);
+  box-shadow: 0 30px 60px rgba(46, 28, 31, 0.18);
+}
+.phone-notch {
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 70px; height: 16px;
+  background: var(--ink);
+  border-radius: 0 0 12px 12px;
+  z-index: 2;
+}
+.phone-screen {
+  background: var(--paper);
+  width: 100%; height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 1rem 0.6rem;
+  font-size: 0.7rem;
+  color: var(--ink);
+}
+.screen-brand { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; }
+
+.screen-scene {
+  position: relative;
+  flex: 1;
+  margin: 0 0.7rem;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #F6D9C4 0%, #F0B7A9 45%, #E8909B 100%);
+}
+.scene-sun {
+  position: absolute; top: 18px; right: 24px;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #FCEBC9;
+}
+.scene-hill { position: absolute; left: -10%; width: 120%; border-radius: 50% 50% 0 0; }
+.scene-hill--back { bottom: 20%; height: 40%; background: rgba(255,255,255,0.35); }
+.scene-hill--front { bottom: 0; height: 34%; background: var(--sage); opacity: 0.55; }
+.scene-figure {
+  position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 26px; border-radius: 5px 5px 2px 2px;
+  background: var(--ink); opacity: 0.8;
+}
+.scene-title {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+  color: var(--paper);
+  text-align: center;
+  font-size: 1.15rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.scene-play {
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; color: var(--deep-rose);
+}
+
+.screen-chat { padding: 0.7rem 1rem 0.3rem; }
+.chat-line {
+  font-size: 0.72rem;
+  background: var(--rose-soft);
+  border-radius: 10px;
+  padding: 0.35rem 0.6rem;
+  margin-bottom: 0.35rem;
+  width: fit-content;
+  max-width: 90%;
+}
+
+.screen-dots { display: flex; justify-content: center; gap: 0.35rem; padding: 0.6rem 0 1rem; }
+.screen-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--line); }
+.screen-dots span.is-active { background: var(--deep-rose); }
+
+.polaroid-stack { position: absolute; bottom: -2rem; right: -2.5rem; }
+.polaroid {
+  position: absolute;
+  width: 90px; height: 100px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 24px rgba(46, 28, 31, 0.1);
+}
+.polaroid--1 { transform: rotate(8deg); z-index: 1; }
+.polaroid--2 { transform: rotate(-6deg) translate(14px, 8px); background: var(--rose-soft); }
+
+@media (max-width: 900px) {
+  .polaroid-stack { display: none; }
+}
+
+.tulip { position: absolute; bottom: -1.5rem; left: -2.5rem; }
+@media (max-width: 900px) {
+  .tulip { display: none; }
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .hero-categories, .hero-desc { margin-left: auto; margin-right: auto; }
+  .hero-categories { justify-content: center; }
+}
+
+/* =========================================================
+   MARQUEE STRIP
+   ========================================================= */
+.marquee {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0.9rem 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--deep-rose);
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+.section { padding: 6rem 5vw; }
+.section--tinted { background: var(--paper); }
+
+.section-title { font-size: clamp(1.9rem, 3.4vw, 2.6rem); margin: 0.4rem 0 3rem; }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.cat-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 2rem 1.4rem;
+  text-align: center;
+}
+.cat-card-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--rose-soft);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.cat-card h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.5rem; }
+.cat-card p { font-size: 0.88rem; opacity: 0.75; line-height: 1.6; }
+
+@media (max-width: 720px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.4rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  color: var(--rose);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.step h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.3rem; margin-bottom: 0.5rem; }
+.step p { font-size: 0.9rem; opacity: 0.78; line-height: 1.7; max-width: 30ch; }
+
+@media (max-width: 720px) {
+  .steps { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   CTA
+   ========================================================= */
+.cta {
+  background: var(--deep-rose);
+  color: var(--paper);
+  text-align: center;
+  padding: 6rem 5vw;
+}
+.cta-eyebrow { color: var(--gold); font-size: 1.05rem; }
+.cta-title { font-size: clamp(2rem, 4vw, 2.8rem); margin: 0.5rem 0 0.8rem; }
+.cta-desc { opacity: 0.85; margin-bottom: 2rem; }
+
+.cta-form {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.cta-form input {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.92rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+  width: 260px;
+  max-width: 80vw;
+}
+.cta-form button {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.92rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1.8rem;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.cta-form button:hover { background: var(--gold); }
+
+.cta-note { margin-top: 1.2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  text-align: center;
+  padding: 2.4rem 5vw;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.footer .nav-logo-mark { display: block; color: var(--deep-rose); font-size: 1.3rem; margin-bottom: 0.4rem; }
+
+/* Accessibility focus */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--deep-rose);
+  outline-offset: 2px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- NAVBAR -->
+<!-- ============================================= -->
+<header class="nav">
+  <div class="nav-logo">
+    <span class="nav-logo-mark">♡</span>
+    <div>
+      <span class="nav-logo-text">Buatmu_id</span>
+      <span class="nav-logo-sub">Website Ucapan Digital</span>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a href="#kategori">Kategori</a>
+    <a href="#cara-kerja">Cara Kerja</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+  <button class="nav-cta">Pesan Sekarang</button>
+</header>
+
+<!-- ============================================= -->
+<!-- HERO -->
+<!-- ============================================= -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="hero-eyebrow">masih ngucapin cuma lewat chat?</p>
+    <h1 class="hero-title">Ubah kenangan<br>jadi cerita digital.</h1>
+    <p class="hero-desc">
+      Buatmu_id membuatkan website ucapan interaktif — lengkap dengan foto,
+      musik, dan pesan spesial — untuk orang yang paling kamu sayangi.
+    </p>
+
+    <div class="hero-categories">
+      <div class="cat-item">
+        <span class="cat-icon" data-icon="cake"></span>
+        <span>Birthday</span>
+      </div>
+      <div class="cat-item">
+        <span class="cat-icon" data-icon="rings"></span>
+        <span>Wedding</span>
+      </div>
+      <div class="cat-item">
+        <span class="cat-icon" data-icon="cap"></span>
+        <span>Graduation</span>
+      </div>
+      <div class="cat-item">
+        <span class="cat-icon" data-icon="bouquet"></span>
+        <span>Anniversary</span>
+      </div>
+    </div>
+
+    <button class="hero-cta" id="heroCta">Lihat Contohnya <span>✦</span></button>
+  </div>
+
+  <div class="hero-visual">
+    <span class="badge badge--top">Hadiah digital yang lebih berkesan ♡</span>
+    <span class="badge badge--side">Bisa dibuka di HP &amp; Laptop</span>
+
+    <div class="phone" id="phoneMock">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="screen-topbar">
+          <span class="screen-mute">♪</span>
+          <span class="screen-brand">Buatmu_id</span>
+          <span class="screen-menu">≡</span>
+        </div>
+        <div class="screen-scene">
+          <div class="scene-sun"></div>
+          <div class="scene-hill scene-hill--back"></div>
+          <div class="scene-hill scene-hill--front"></div>
+          <div class="scene-figure"></div>
+          <p class="scene-title">Happy Birthday<br>Dear You ♡</p>
+          <span class="scene-play">▶</span>
+        </div>
+        <div class="screen-chat">
+          <p class="chat-line">Selamat ulang tahun ✦</p>
+          <p class="chat-line">Semoga semua impianmu</p>
+          <p class="chat-line">selalu menjadi kenyataan</p>
+        </div>
+        <div class="screen-dots">
+          <span></span><span></span><span class="is-active"></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="polaroid-stack" aria-hidden="true">
+      <div class="polaroid polaroid--1"></div>
+      <div class="polaroid polaroid--2"></div>
+    </div>
+
+    <svg class="tulip" width="120" height="130" viewBox="0 0 120 130" aria-hidden="true">
+      <path d="M60 130 L60 55" stroke="#8E9E6B" stroke-width="3" fill="none"/>
+      <ellipse cx="60" cy="35" rx="16" ry="26" fill="#E8A6AC"/>
+      <ellipse cx="44" cy="45" rx="13" ry="22" fill="#EFC1C6" transform="rotate(-18 44 45)"/>
+      <ellipse cx="76" cy="45" rx="13" ry="22" fill="#EFC1C6" transform="rotate(18 76 45)"/>
+      <path d="M60 95 C40 95 30 110 28 122" stroke="#8E9E6B" stroke-width="3" fill="none"/>
+    </svg>
+  </div>
+</section>
+
+<p class="marquee">setiap momen spesial layak dirayakan ✦ small moments make big memories ✦ setiap momen spesial layak dirayakan ✦</p>
+
+<!-- ============================================= -->
+<!-- KATEGORI -->
+<!-- ============================================= -->
+<section class="section" id="kategori">
+  <p class="section-eyebrow center">pilih momennya</p>
+  <h2 class="section-title center">Untuk Setiap Momen yang Berarti</h2>
+
+  <div class="cat-grid">
+    <article class="cat-card">
+      <span class="cat-card-icon" data-icon="cake"></span>
+      <h3>Birthday</h3>
+      <p>Kejutan ulang tahun digital, lengkap dengan hitung mundur dan pesan spesial.</p>
+    </article>
+    <article class="cat-card">
+      <span class="cat-card-icon" data-icon="rings"></span>
+      <h3>Wedding</h3>
+      <p>Undangan &amp; ucapan pernikahan yang menyimpan kisah kalian berdua.</p>
+    </article>
+    <article class="cat-card">
+      <span class="cat-card-icon" data-icon="cap"></span>
+      <h3>Graduation</h3>
+      <p>Rayakan pencapaian dengan galeri perjalanan dari awal hingga wisuda.</p>
+    </article>
+    <article class="cat-card">
+      <span class="cat-card-icon" data-icon="bouquet"></span>
+      <h3>Anniversary</h3>
+      <p>Timeline cerita kalian, dari pertemuan pertama sampai hari ini.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- CARA KERJA -->
+<!-- ============================================= -->
+<section class="section section--tinted" id="cara-kerja">
+  <p class="section-eyebrow center">cara kerja</p>
+  <h2 class="section-title center">Tiga Langkah, Satu Kenangan</h2>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">1</span>
+      <h3>Ceritakan Momennya</h3>
+      <p>Kirim foto, cerita, dan detail yang ingin kamu masukkan ke Buatmu_id.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">2</span>
+      <h3>Kami Susun Jadi Website</h3>
+      <p>Tim kami merancang halaman interaktif lengkap dengan musik &amp; animasi.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">3</span>
+      <h3>Kirim ke Orang Tersayang</h3>
+      <p>Bagikan link-nya — bisa dibuka kapan saja, di HP maupun laptop.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================= -->
+<!-- CTA / COMING SOON -->
+<!-- ============================================= -->
+<section class="cta" id="kontak">
+  <p class="cta-eyebrow">small moments make big memories ♡</p>
+  <h2 class="cta-title">Siap membuatkan ceritamu.</h2>
+  <p class="cta-desc">Tinggalkan kontakmu, kami hubungi untuk mulai mendesain hadiahmu.</p>
+
+  <form class="cta-form" id="ctaForm">
+    <input type="text" placeholder="Nomor WhatsApp kamu" required>
+    <button type="submit">Pesan Sekarang</button>
+  </form>
+  <p class="cta-note" id="ctaNote" hidden>Terima kasih — tim kami akan segera menghubungi kamu ✦</p>
+</section>
+
+<footer class="footer">
+  <span class="nav-logo-mark">♡</span>
+  <p>Buatmu_id — website ucapan digital untuk setiap momen berharga.</p>
+</footer>
+
+<script>
+// =========================================================
+// Scroll halus saat tombol hero ditekan -> ke bagian kategori
+// =========================================================
+const heroCta = document.getElementById('heroCta');
+heroCta.addEventListener('click', () => {
+  document.getElementById('kategori').scrollIntoView({ behavior: 'smooth' });
+});
+
+// =========================================================
+// Tombol "Pesan Sekarang" di navbar -> scroll ke form kontak
+// =========================================================
+document.querySelector('.nav-cta').addEventListener('click', () => {
+  document.getElementById('kontak').scrollIntoView({ behavior: 'smooth' });
+});
+
+// =========================================================
+// Form "Coming Soon" — ganti bagian ini dengan pengiriman
+// data asli (WhatsApp API / Google Form / backend kamu)
+// =========================================================
+const ctaForm = document.getElementById('ctaForm');
+const ctaNote = document.getElementById('ctaNote');
+
+ctaForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  ctaForm.hidden = true;
+  ctaNote.hidden = false;
+});
+
+// =========================================================
+// Sedikit gerakan pada phone mockup saat kursor digerakkan
+// (efek melayang, hanya untuk desktop / pointer halus)
+// =========================================================
+const phone = document.getElementById('phoneMock');
+if (window.matchMedia('(pointer: fine)').matches) {
+  document.querySelector('.hero-visual').addEventListener('mousemove', (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+    phone.style.transform = `rotate(${-3 + x * 4}deg)`;
+  });
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="soft">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu — Sweet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Sweat Aniv.css">
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- THEME SWITCHER — 3 pilihan tetap (bukan custom design) -->
+<!-- ============================================= -->
+<div class="theme-switch" role="group" aria-label="Pilih tema">
+  <button class="theme-dot" data-theme-btn="soft" aria-label="Tema Soft"></button>
+  <button class="theme-dot" data-theme-btn="elegant" aria-label="Tema Elegant"></button>
+  <button class="theme-dot" data-theme-btn="dark" aria-label="Tema Dark"></button>
+</div>
+
+<!-- ============================================= -->
+<!-- SAMPUL / COVER -->
+<!-- Ganti "Nama Penerima" sesuai pesanan customer -->
+<!-- ============================================= -->
+<section id="cover">
+  <div class="cover-inner">
+    <p class="cover-eyebrow">sebuah hadiah kecil untuk</p>
+    <h1 class="cover-name">Nama Penerima</h1>
+    <button id="openBtn" class="cover-btn">Buka Hadiahnya</button>
+  </div>
+</section>
+
+<!-- Tombol musik — audio bersifat opsional, tetap berfungsi normal tanpa file -->
+<button id="musicToggle" class="music-toggle" aria-label="Putar musik" hidden>
+  <span class="music-icon"></span>
+</button>
+<!-- Ganti src dengan file musik dari customer. Kalau tidak ada, hapus/biarkan kosong -->
+<audio id="bgAudio" loop preload="none">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<main id="story" hidden>
+
+  <!-- ============================================= -->
+  <!-- 1. PERSONALIZED OPENING -->
+  <!-- ============================================= -->
+  <section class="panel" id="opening">
+    <div class="panel-inner reveal-on-scroll">
+      <p class="label">untuk kamu,</p>
+      <h2 class="display-text">Nama Penerima</h2>
+      <!-- Ganti dengan pesan pembuka singkat dari customer -->
+      <p class="body-text">
+        Hadiah kecil ini dibuat khusus untukmu — sesuatu yang sederhana,
+        tapi dibuat dengan sepenuh hati.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 2. BIRTHDAY REVEAL — animasi angka + confetti -->
+  <!-- Ganti data-target dengan angka usia/tahun sebenarnya -->
+  <!-- ============================================= -->
+  <section class="panel panel--accent" id="birthdayReveal">
+    <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+    <div class="panel-inner reveal-on-scroll">
+      <p class="label label--onaccent">selamat</p>
+      <div class="reveal-number" id="revealNumber" data-target="20">0</div>
+      <p class="reveal-caption">tahun yang penuh cerita ✦</p>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 3. PHOTO GALLERY — maksimal 7 foto, gaya polaroid -->
+  <!-- Ganti setiap .polaroid dengan <img src="foto.jpg" alt="..."> -->
+  <!-- ============================================= -->
+  <section class="panel" id="gallery">
+    <div class="panel-inner">
+      <p class="label center">sepotong kenangan</p>
+      <h2 class="display-text center">Galeri Foto</h2>
+
+      <div class="polaroid-grid">
+        <figure class="polaroid"><span class="polaroid-ph">Foto 1</span><figcaption>Ganti caption</figcaption></figure>
+        <figure class="polaroid"><span class="polaroid-ph">Foto 2</span><figcaption>Ganti caption</figcaption></figure>
+        <figure class="polaroid"><span class="polaroid-ph">Foto 3</span><figcaption>Ganti caption</figcaption></figure>
+        <figure class="polaroid"><span class="polaroid-ph">Foto 4</span><figcaption>Ganti caption</figcaption></figure>
+        <figure class="polaroid"><span class="polaroid-ph">Foto 5</span><figcaption>Ganti caption</figcaption></figure>
+        <figure class="polaroid"><span class="polaroid-ph">Foto 6</span><figcaption>Ganti caption</figcaption></figure>
+        <figure class="polaroid"><span class="polaroid-ph">Foto 7</span><figcaption>Ganti caption</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 4. PERSONAL LETTER — greeting / main message / closing -->
+  <!-- ============================================= -->
+  <section class="panel panel--dark" id="letter">
+    <div class="panel-inner reveal-on-scroll">
+      <p class="label label--onaccent center">sepucuk surat</p>
+
+      <div class="letter-paper">
+        <!-- Ganti sapaan pembuka -->
+        <p class="letter-greeting">Untuk kamu yang paling spesial,</p>
+
+        <!-- Ganti isi pesan utama dari customer, boleh lebih dari satu paragraf -->
+        <p class="letter-main">
+          Ganti dengan pesan utama dari customer di sini. Bagian ini lebih luas
+          dari sekadar satu kalimat — biarkan ceritanya mengalir apa adanya,
+          sesuai gaya bicara customer sendiri.
+        </p>
+
+        <!-- Ganti kalimat penutup + tanda tangan -->
+        <p class="letter-closing">Dengan sayang,<br><span>Nama Pengirim</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 5. SIMPLE ENDING + SHAREABLE LINK -->
+  <!-- ============================================= -->
+  <section class="panel panel--accent" id="ending">
+    <div class="panel-inner center reveal-on-scroll">
+      <p class="label label--onaccent center">penutup</p>
+      <!-- Ganti kalimat penutup personal -->
+      <h2 class="display-text center">Terima kasih sudah membacanya.</h2>
+      <p class="body-text center">Semoga hari-harimu selalu semanis ini ✦</p>
+
+      <button id="copyLinkBtn" class="share-btn">Salin Link Halaman Ini</button>
+      <p id="copyNote" class="copy-note" hidden>Link disalin ✦</p>
+    </div>
+  </section>
+
+</main>
+
+<script src="Sweat Aniv.js"></script>
+</body>
+</html>

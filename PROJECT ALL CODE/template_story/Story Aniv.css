@@ -1,0 +1,406 @@
+/* =========================================================
+   THEME TOKENS
+   Ganti nilai di :root untuk tema "rose" (default).
+   Tema kedua "gold" sudah disiapkan di bawahnya —
+   tinggal ganti data-theme="gold" di tag <html> pada index.html
+   untuk memakainya, atau tambah tema baru dengan pola yang sama.
+   ========================================================= */
+:root,
+[data-theme="rose"] {
+  --ink: #241512;
+  --cream: #FBF3E7;
+  --paper: #FDF9F3;
+  --accent: #C77B84;
+  --accent-deep: #7A3B42;
+  --gold: #C9A227;
+  --line: #E8D3C5;
+}
+
+[data-theme="gold"] {
+  --ink: #241C10;
+  --cream: #FBF6EA;
+  --paper: #FEFBF3;
+  --accent: #C9A227;
+  --accent-deep: #6B5218;
+  --gold: #C77B84;
+  --line: #EADFC2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* =========================================================
+   TIPOGRAFI
+   ========================================================= */
+.display-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+}
+
+.label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: var(--accent-deep);
+  margin-bottom: 0.6rem;
+}
+.label--light { color: var(--gold); }
+
+.body-text {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  max-width: 42ch;
+  color: var(--ink);
+  opacity: 0.88;
+}
+
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* =========================================================
+   COVER
+   ========================================================= */
+#cover {
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--accent-deep);
+  color: var(--paper);
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.cover-texture {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 40%),
+    radial-gradient(circle at 80% 75%, rgba(255,255,255,0.05), transparent 45%);
+  pointer-events: none;
+}
+
+.cover-inner { position: relative; z-index: 1; }
+
+.cover-eyebrow {
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  margin-bottom: 0.4rem;
+}
+
+.cover-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  margin-bottom: 0.6rem;
+}
+
+.cover-sub {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-bottom: 2.4rem;
+}
+
+.cover-btn {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 999px;
+  padding: 0.9rem 2.2rem;
+  cursor: pointer;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+.cover-btn:hover,
+.cover-btn:focus-visible {
+  background: var(--paper);
+  color: var(--accent-deep);
+}
+
+#cover.is-closing {
+  animation: coverFade 0.9s ease forwards;
+}
+@keyframes coverFade {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* =========================================================
+   PANELS (struktur umum tiap section)
+   ========================================================= */
+.panel {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 1.5rem;
+}
+
+.panel-inner {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.panel--dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+.panel--dark .body-text,
+.panel--dark .display-text { color: var(--paper); }
+
+.panel--rose {
+  background: var(--accent);
+  color: var(--paper);
+}
+.panel--rose .display-text,
+.panel--rose .body-text,
+.panel--rose .chapter-title { color: var(--paper); }
+.panel--rose .label { color: var(--paper); opacity: 0.85; }
+
+/* =========================================================
+   SCROLL REVEAL — satu jenis transisi, dipakai konsisten
+   untuk menjaga ritme "membuka cerita" saat di-scroll
+   ========================================================= */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   MOMENT REVEAL (angka animasi)
+   ========================================================= */
+#momentReveal .panel-inner { text-align: center; }
+.reveal-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: clamp(5rem, 18vw, 9rem);
+  line-height: 1;
+  color: var(--gold);
+}
+.reveal-caption {
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+  margin-top: 0.6rem;
+}
+
+/* =========================================================
+   GALLERY — mosaic, bukan grid seragam
+   ========================================================= */
+.gallery-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 120px;
+  gap: 0.6rem;
+}
+.frame {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  grid-column: span 2;
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.frame-ph {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  color: var(--accent-deep);
+  opacity: 0.55;
+}
+.frame--tall { grid-row: span 3; }
+.frame--wide { grid-column: span 4; grid-row: span 2; }
+
+@media (max-width: 640px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 110px; }
+  .frame { grid-column: span 1 !important; grid-row: span 2 !important; }
+  .frame--wide { grid-column: span 2 !important; }
+}
+
+/* =========================================================
+   OUR STORY
+   ========================================================= */
+.story-chapter {
+  margin-top: 3rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(255,255,255,0.35);
+}
+.story-chapter:first-of-type { margin-top: 3.2rem; }
+.chapter-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.7rem;
+  margin-bottom: 0.6rem;
+}
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+.timeline-list {
+  list-style: none;
+  margin-top: 2.5rem;
+  border-left: 1px solid var(--line);
+  padding-left: 1.6rem;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.4rem;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.68rem;
+  top: 0.35rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.timeline-year {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  color: var(--accent-deep);
+}
+.timeline-text {
+  display: block;
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-top: 0.15rem;
+}
+
+/* =========================================================
+   LETTER
+   ========================================================= */
+.letter-paper {
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.25);
+  padding-top: 2rem;
+}
+.letter-text {
+  max-width: 56ch;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  line-height: 1.9;
+  color: var(--paper);
+  opacity: 0.95;
+}
+.letter-signoff {
+  margin-top: 1.6rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+
+/* =========================================================
+   INTERACTIVE REVEAL
+   ========================================================= */
+.reveal-btn {
+  margin-top: 1.4rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  background: var(--accent-deep);
+  color: var(--paper);
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+.reveal-btn:hover,
+.reveal-btn:focus-visible { background: var(--ink); transform: translateY(-2px); }
+
+.hidden-message {
+  margin-top: 1.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.4rem;
+  max-width: 40ch;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: unfold 0.8s ease forwards;
+}
+@keyframes unfold {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   MUSIC TOGGLE
+   ========================================================= */
+.music-toggle {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom, 1.2rem);
+  right: 1.2rem;
+  z-index: 20;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.music-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-deep);
+  position: relative;
+}
+.music-icon::before {
+  content: "";
+  position: absolute;
+  left: 100%;
+  bottom: -2px;
+  width: 2px;
+  height: 20px;
+  background: var(--accent-deep);
+}
+.music-toggle.is-playing .music-icon { animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.25); } }
+
+/* Focus visibility (accessibility floor) */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}

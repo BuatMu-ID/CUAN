@@ -1,0 +1,336 @@
+/* =========================================================
+   THEME TOKENS — 3 preset tetap: Soft / Elegant / Dark
+   Customer memilih salah satu, bukan custom warna bebas.
+   ========================================================= */
+[data-theme="soft"] {
+  --bg: #FBF1EA;
+  --surface: #FFFFFF;
+  --text: #3B2A2C;
+  --text-soft: rgba(59, 42, 44, 0.75);
+  --accent: #E8AFAE;
+  --accent-deep: #C97D7D;
+  --line: #F0DAD4;
+  --on-accent: #3B2A2C;
+}
+
+[data-theme="elegant"] {
+  --bg: #F5EDE1;
+  --surface: #FFFCF6;
+  --text: #241318;
+  --text-soft: rgba(36, 19, 24, 0.75);
+  --accent: #B08945;
+  --accent-deep: #5C2A34;
+  --line: #E3D4B8;
+  --on-accent: #FFFCF6;
+}
+
+[data-theme="dark"] {
+  --bg: #171012;
+  --surface: #231A1C;
+  --text: #F4E9E3;
+  --text-soft: rgba(244, 233, 227, 0.72);
+  --accent: #D98E8E;
+  --accent-deep: #E8AFAE;
+  --line: #3A2A2C;
+  --on-accent: #171012;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* =========================================================
+   TYPE
+   ========================================================= */
+.display-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  line-height: 1.15;
+}
+
+[data-theme="elegant"] .display-text { letter-spacing: 0.3px; font-style: italic; }
+
+.label {
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: var(--accent-deep);
+  margin-bottom: 0.6rem;
+}
+.label--onaccent { color: var(--on-accent); opacity: 0.85; }
+
+.body-text {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  max-width: 42ch;
+  color: var(--text-soft);
+}
+
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* =========================================================
+   THEME SWITCHER
+   ========================================================= */
+.theme-switch {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 30;
+  display: flex;
+  gap: 0.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.4rem;
+}
+.theme-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+.theme-dot[data-theme-btn="soft"] { background: #E8AFAE; }
+.theme-dot[data-theme-btn="elegant"] { background: #5C2A34; }
+.theme-dot[data-theme-btn="dark"] { background: #171012; }
+.theme-dot.is-active { outline: 2px solid var(--accent-deep); outline-offset: 2px; }
+
+/* =========================================================
+   COVER
+   ========================================================= */
+#cover {
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-deep);
+  color: var(--surface);
+  text-align: center;
+  padding: 2rem;
+}
+.cover-eyebrow { font-size: 0.95rem; opacity: 0.8; margin-bottom: 0.4rem; }
+.cover-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  margin-bottom: 2.2rem;
+}
+.cover-btn {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 999px;
+  padding: 0.9rem 2.2rem;
+  cursor: pointer;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+.cover-btn:hover, .cover-btn:focus-visible { background: var(--surface); color: var(--accent-deep); }
+
+#cover.is-closing { animation: coverFade 0.8s ease forwards; }
+@keyframes coverFade { to { opacity: 0; visibility: hidden; } }
+
+/* =========================================================
+   PANELS
+   ========================================================= */
+.panel {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.panel-inner { max-width: 600px; width: 100%; margin: 0 auto; }
+
+.panel--accent { background: var(--accent-deep); color: var(--on-accent); }
+.panel--accent .display-text,
+.panel--accent .body-text { color: var(--on-accent); }
+
+.panel--dark { background: var(--text); color: var(--bg); }
+.panel--dark .letter-main,
+.panel--dark .letter-greeting,
+.panel--dark .letter-closing { color: var(--bg); }
+
+/* =========================================================
+   SCROLL REVEAL — satu jenis transisi konsisten
+   ========================================================= */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+/* =========================================================
+   BIRTHDAY REVEAL — angka + confetti
+   ========================================================= */
+#birthdayReveal .panel-inner { text-align: center; position: relative; z-index: 2; }
+.reveal-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: clamp(4.5rem, 16vw, 8rem);
+  line-height: 1;
+}
+.reveal-caption { font-size: 1rem; opacity: 0.85; margin-top: 0.6rem; }
+
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.confetti-piece {
+  position: absolute;
+  top: -10%;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  to { transform: translateY(120vh) rotate(320deg); opacity: 0.9; }
+}
+
+/* =========================================================
+   GALLERY — polaroid style, maksimal 7 foto
+   ========================================================= */
+.polaroid-grid {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem 1.2rem;
+  justify-content: center;
+}
+.polaroid {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 0.7rem 0.7rem 1.1rem;
+  width: 150px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+.polaroid:hover { transform: translateY(-4px) rotate(0deg) !important; }
+.polaroid:nth-child(odd) { transform: rotate(-3deg); }
+.polaroid:nth-child(even) { transform: rotate(3deg); }
+.polaroid:nth-child(3n) { transform: rotate(-1.5deg); }
+
+.polaroid-ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  background: var(--bg);
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+.polaroid img { width: 100%; height: 150px; object-fit: cover; display: block; }
+.polaroid figcaption {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 0.6rem;
+  color: var(--text);
+}
+
+/* =========================================================
+   LETTER — greeting / main message / closing
+   ========================================================= */
+.letter-paper { margin-top: 1rem; }
+.letter-greeting {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  margin-bottom: 1.4rem;
+}
+.letter-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 1.9;
+  max-width: 54ch;
+  margin-bottom: 1.8rem;
+}
+.letter-closing {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.letter-closing span {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+}
+
+/* =========================================================
+   ENDING / SHARE
+   ========================================================= */
+.share-btn {
+  margin-top: 1.6rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.92rem;
+  background: var(--surface);
+  color: var(--accent-deep);
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.share-btn:hover, .share-btn:focus-visible { transform: translateY(-2px); }
+.copy-note { margin-top: 1rem; font-size: 0.9rem; opacity: 0.85; }
+
+/* =========================================================
+   MUSIC TOGGLE
+   ========================================================= */
+.music-toggle {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom, 1.2rem);
+  right: 1.2rem;
+  z-index: 20;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.music-icon {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent-deep);
+  position: relative;
+}
+.music-icon::before {
+  content: "";
+  position: absolute;
+  left: 100%; bottom: -2px;
+  width: 2px; height: 20px;
+  background: var(--accent-deep);
+}
+.music-toggle.is-playing .music-icon { animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.25); } }
+
+/* Accessibility focus */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
